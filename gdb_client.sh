@@ -5,6 +5,10 @@
 # Description	:
 ##########################################################
 #!/bin/bash
+if [ ! -n "${TOPDIR}" ];then
+	echo "Please execute the command (source envsetup.sh) in the project root directory"
+	exit 1;
+fi
 
 ARCH=arm64
 VMLINUX="${TOPDIR}/image_file/vmlinux"
