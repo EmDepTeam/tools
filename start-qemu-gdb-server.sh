@@ -14,9 +14,9 @@ if [ $ARCH == "arm64" ]; then
 	echo "Qemu for arm64 ..."
 	qemu-system-aarch64 -machine virt \
 		-cpu cortex-a57 -m 2048 -smp 2 \
-		-kernel for_qemu/Image -nographic \
+		-kernel ${KERNEL} -nographic \
 		-append "root=/dev/vda rw console=ttyAMA0 115200 loglevel=8" \
-		-hda for_qemu/rootfs.ext4 \
+		-hda ${ROOTFS} \
 		-s -S
 else
 	KERNEL="${TOPDIR}/image_file/zImage"
@@ -24,10 +24,10 @@ else
 	
 	echo "Qemu for arm ..."
 	qemu-system-arm -M vexpress-a9 -m 512M \
-		-dtb ./for_qemu/vexpress-v2p-ca9.dtb \
-		-kernel ./for_qemu/zImage -nographic \
+		-dtb ${DTB} \
+		-kernel ${KERNEL} -nographic \
 		-append "root=/dev/mmcblk0 rw console=ttyAMA0 init=/bin/sh" \
-		-sd ./for_qemu//rootfs.ext4 \
+		-sd ${ROOTFS} \
 		-s -S
 fi
 
