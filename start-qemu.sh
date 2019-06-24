@@ -13,15 +13,7 @@ if [ $ARCH == "arm64" ]; then
 	KERNEL="${TOPDIR}/image_file/Image"
 
 	echo "Qemu for arm64 ..."
-	if [ $NET == "net" ]; then
-		qemu-system-aarch64 -machine virt \
-			-cpu cortex-a57 -m 2048 -smp 2 \
-			-kernel ${KERNEL} -nographic \
-			-append "root=/dev/vda rw console=ttyAMA0 115200 loglevel=8" \
-			-hda ${ROOTFS} \
-			-fsdev local,security_model=passthrough,id=fsdev0,path=${HOME}/nfs \
-			-device virtio-9p-pci,id=fs0,fsdev=fsdev0,mount_tag=hostshare
-	else
+	if [ x$NET == x"net" ]; then
 		qemu-system-aarch64 -machine virt \
 			-cpu cortex-a57 -m 2048 -smp 2 \
 			-kernel ${KERNEL} -nographic \
@@ -29,6 +21,14 @@ if [ $ARCH == "arm64" ]; then
 			-hda ${ROOTFS} \
 			-device e1000e,netdev=dev0,mac='00:00:00:01:00:01'\
 			-netdev tap,ifname=tap-int,id=dev0,script=no,downscript=no,vhost=on
+	else
+		qemu-system-aarch64 -machine virt \
+			-cpu cortex-a57 -m 2048 -smp 2 \
+			-kernel ${KERNEL} -nographic \
+			-append "root=/dev/vda rw console=ttyAMA0 115200 loglevel=8" \
+			-hda ${ROOTFS} \
+			-fsdev local,security_model=passthrough,id=fsdev0,path=${HOME}/nfs \
+			-device virtio-9p-pci,id=fs0,fsdev=fsdev0,mount_tag=hostshare
 	fi
 else
 	KERNEL="${TOPDIR}/image_file/zImage"
