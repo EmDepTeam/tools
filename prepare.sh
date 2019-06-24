@@ -7,7 +7,7 @@
 #!/bin/bash
 
 function prepare() {
-    sudo apt-get -y install qemu texinfo gcc-aarch64-linux-gnu
+    sudo apt-get -y install qemu qemu-efi-aarch64 gcc-aarch64-linux-gnu uml-utilities bridge-utils
 }
 
 prepare

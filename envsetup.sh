@@ -26,3 +26,5 @@ export TOPDIR PATH CROSS_COMPILE
 echo $PATH
 echo $CROSS_COMPILE
 
+echo ""
+echo "TOPDIR: ${TOPDIR}"
